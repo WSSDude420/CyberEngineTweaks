@@ -5,6 +5,7 @@ enum class WidgetID
     CONSOLE,
     BINDINGS,
     SETTINGS,
+    DEVELOPER,
     COUNT
 };
 

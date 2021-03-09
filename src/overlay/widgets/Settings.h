@@ -33,6 +33,7 @@ private:
     bool m_patchDisableWin7Vsync{ false };
     bool m_dumpGameOptions{ false };
     bool m_telemetry{ true };
+    bool m_showCETDeveloperOptions{ false };
     VKBindings& m_bindings;
     Overlay& m_overlay;
     Options& m_options;

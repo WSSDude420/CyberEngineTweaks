@@ -70,9 +70,15 @@ void Overlay::Update()
     if (m_toggled)
     {
         if (m_enabled)
+        {
+            m_widgets[static_cast<size_t>(m_activeWidgetID)]->OnEnable();
             m_vm.OnOverlayOpen();
+        }
         else
+        {
+            m_widgets[static_cast<size_t>(m_activeWidgetID)]->OnDisable();
             m_vm.OnOverlayClose();
+        }
         m_toggled = false;
     }
 
@@ -114,6 +120,15 @@ void Overlay::Update()
             if (ImGui::BeginChild("Settings", zeroVec, true))
                 m_settings.Update();
             ImGui::EndChild();
+        }
+        if (!m_options.IsFirstLaunch)
+        {
+            if (m_activeWidgetID == WidgetID::DEVELOPER)
+            {
+                if (ImGui::BeginChild("Developer", zeroVec, true))
+                    m_developer.Update();
+                ImGui::EndChild();
+            }
         }
     }
     ImGui::End();
@@ -181,6 +196,7 @@ Overlay::Overlay(D3D12& aD3D12, VKBindings& aBindings, Options& aOptions, LuaVM&
     : m_console(aVm)
     , m_bindings(aBindings, *this, aVm)
     , m_settings(*this, aBindings, aOptions)
+    , m_developer(aOptions)
     , m_VKBOverlay{"cet.overlay_key", "Overlay Key", [this]() { Toggle(); }}
     , m_d3d12(aD3D12)
     , m_options(aOptions)
@@ -189,6 +205,7 @@ Overlay::Overlay(D3D12& aD3D12, VKBindings& aBindings, Options& aOptions, LuaVM&
     m_widgets[static_cast<size_t>(WidgetID::CONSOLE)] = &m_console;
     m_widgets[static_cast<size_t>(WidgetID::BINDINGS)] = &m_bindings;
     m_widgets[static_cast<size_t>(WidgetID::SETTINGS)] = &m_settings;
+    m_widgets[static_cast<size_t>(WidgetID::DEVELOPER)] = &m_developer;
 
     Hook();
 

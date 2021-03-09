@@ -4,6 +4,7 @@
 #include "widgets/Console.h"
 #include "widgets/Bindings.h"
 #include "widgets/Settings.h"
+#include "widgets/Developer.h"
 
 using TClipToCenter = HWND(RED4ext::CGameEngine::UnkC0*);
 
@@ -44,6 +45,7 @@ private:
     Console m_console;
     Bindings m_bindings;
     Settings m_settings;
+    Developer m_developer;
     std::array<Widget*, size_t(WidgetID::COUNT)> m_widgets{ }; 
 
     TClipToCenter* m_realClipToCenter{ nullptr };

@@ -20,6 +20,9 @@ namespace HelperWidgets
         ImGui::SameLine();
         if (ImGui::Button("Settings"))
             activeID = WidgetID::SETTINGS;
+        ImGui::SameLine();
+        if (ImGui::Button("Developer"))
+            activeID = WidgetID::DEVELOPER;
         ImGui::Spacing();
         return activeID;
     }

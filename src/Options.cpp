@@ -24,6 +24,10 @@ void Options::Load()
             PatchDisableWin7Vsync = config.value("disable_win7_vsync", PatchDisableWin7Vsync);
 
             DumpGameOptions = config.value("dump_game_options", DumpGameOptions);
+
+            ShowCETDeveloperOptions = config.value("cet_developer_options", ShowCETDeveloperOptions);
+            DrawImGuiDiagnosticWindow = config.value("cetdev_draw_imgui_diagnostics", DrawImGuiDiagnosticWindow);
+            RemoveDeadBindings = config.value("cetdev_remove_dead_bindings", RemoveDeadBindings);
             
             // font config
             FontPath = config.value("font_path", FontPath);
@@ -70,6 +74,9 @@ void Options::Save()
     config["disable_boundary_teleport"] = PatchDisableBoundaryTeleport;
     config["disable_win7_vsync"] = PatchDisableWin7Vsync;
     config["dump_game_options"] = DumpGameOptions;
+    config["cet_developer_options"] = ShowCETDeveloperOptions;
+    config["cetdev_draw_imgui_diagnostics"] = DrawImGuiDiagnosticWindow;
+    config["cetdev_remove_dead_bindings"] = RemoveDeadBindings;
     config["font_path"] = FontPath;
     config["font_glyph_ranges"] = FontGlyphRanges;
     config["font_size"] = FontSize;
@@ -91,6 +98,9 @@ void Options::ResetToDefaults()
     PatchDisableBoundaryTeleport = false;
     PatchDisableWin7Vsync = false;
     DumpGameOptions = false;
+    ShowCETDeveloperOptions = false;
+    DrawImGuiDiagnosticWindow = false;
+    RemoveDeadBindings = true;
 
     Save();
 }

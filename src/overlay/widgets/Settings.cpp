@@ -59,6 +59,7 @@ void Settings::Update()
     HelperWidgets::BoolWidget("Disable Boundary Teleport:", m_patchDisableBoundaryTeleport, m_options.PatchDisableBoundaryTeleport);
     HelperWidgets::BoolWidget("Disable V-Sync (Windows 7 only):", m_patchDisableWin7Vsync, m_options.PatchDisableWin7Vsync);
     HelperWidgets::BoolWidget("Dump Game Options:", m_dumpGameOptions, m_options.DumpGameOptions);
+    HelperWidgets::BoolWidget("Show CET Developer Options:", m_showCETDeveloperOptions, m_options.ShowCETDeveloperOptions);
 
     if (!m_options.IsFirstLaunch)
         ImGui::EndChild();
@@ -80,6 +81,7 @@ void Settings::Load()
     m_patchDisableBoundaryTeleport = m_options.PatchDisableBoundaryTeleport;
     m_patchDisableWin7Vsync = m_options.PatchDisableWin7Vsync;
     m_dumpGameOptions = m_options.DumpGameOptions;
+    m_showCETDeveloperOptions = m_options.ShowCETDeveloperOptions;
 }
 
 void Settings::Save()
@@ -101,6 +103,7 @@ void Settings::Save()
     m_options.PatchDisableBoundaryTeleport = m_patchDisableBoundaryTeleport;
     m_options.PatchDisableWin7Vsync = m_patchDisableWin7Vsync;
     m_options.DumpGameOptions = m_dumpGameOptions;
+    m_options.ShowCETDeveloperOptions = m_showCETDeveloperOptions;
 
     m_options.Save();
 }
