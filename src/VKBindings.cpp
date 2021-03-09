@@ -18,8 +18,9 @@ uint64_t VKBindInfo::Apply()
     return CodeBind;
 }
 
-VKBindings::VKBindings(Paths& aPaths)
+VKBindings::VKBindings(Paths& aPaths, const Options& aOptions)
     : m_paths(aPaths)
+    , m_options(aOptions)
 {
 }
 
@@ -68,18 +69,19 @@ std::vector<VKBindInfo> VKBindings::InitializeMods(std::vector<VKBindInfo> aVKBi
 
         // TODO - try to avoid O(n^2) situation here
         auto found = false;
+        auto valid = true;
         for (auto& vkBindInfo : aVKBindInfos)
         {
             found = (idToBind.first == vkBindInfo.Bind.ID);
             if (found)
             {
                 // test if bind is hotkey and if not, check if bind is valid for input (which means it has single input key, not combo)
-                found = (vkBindInfo.Bind.IsHotkey() || ((idToBind.second & 0xFFFF000000000000) == idToBind.second));
-                break; // we just reset found flag accordingly and exit here, we found valid entry, no need to continue regardless of result
+                valid = (vkBindInfo.Bind.IsHotkey() || ((idToBind.second & 0xFFFF000000000000) == idToBind.second));
+                break; // we just set valid flag accordingly and exit here, we found valid entry, no need to continue regardless of result
             }
         }
 
-        if (!found)
+        if (!valid || (m_options.RemoveDeadBindings && !found))
             deadIDToBinds.emplace_back(idToBind);
     }
 

@@ -60,7 +60,7 @@ bool CET::IsRunning() noexcept
 
 CET::CET()
     : m_options(m_paths)
-    , m_bindings(m_paths)
+    , m_bindings(m_paths, m_options)
     , m_window(&m_overlay, &m_bindings, &m_d3d12)
     , m_d3d12(m_window, m_paths, m_options)
     , m_vm(m_paths, m_bindings, m_d3d12, m_options)
