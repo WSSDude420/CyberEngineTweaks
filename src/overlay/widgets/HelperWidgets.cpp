@@ -3,12 +3,13 @@
 #include "HelperWidgets.h"
 
 #include "CET.h"
+#include "Options.h"
 #include "overlay/Overlay.h"
 
 namespace HelperWidgets
 {
 
-    WidgetID ToolbarWidget()
+    WidgetID ToolbarWidget(const Options& aOptions)
     {
         WidgetID activeID = WidgetID::COUNT;
         ImGui::SameLine();
@@ -20,9 +21,12 @@ namespace HelperWidgets
         ImGui::SameLine();
         if (ImGui::Button("Settings"))
             activeID = WidgetID::SETTINGS;
-        ImGui::SameLine();
-        if (ImGui::Button("Developer"))
-            activeID = WidgetID::DEVELOPER;
+        if (aOptions.ShowCETDeveloperOptions)
+        {
+            ImGui::SameLine();
+            if (ImGui::Button("Developer"))
+                activeID = WidgetID::DEVELOPER;
+        }
         ImGui::Spacing();
         return activeID;
     }
