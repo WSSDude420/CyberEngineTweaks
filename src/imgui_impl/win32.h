@@ -14,17 +14,12 @@
 #pragma once
 #include "imgui.h"      // IMGUI_IMPL_API
 
-IMGUI_IMPL_API bool ImGui_ImplWin32_Init(HWND ahWnd);
-IMGUI_IMPL_API void ImGui_ImplWin32_Shutdown();
-IMGUI_IMPL_API void ImGui_ImplWin32_NewFrame(SIZE aOutSize);
-
-// Configuration
-// - Disable gamepad support or linking with xinput.lib
-//#define IMGUI_IMPL_WIN32_DISABLE_GAMEPAD
-//#define IMGUI_IMPL_WIN32_DISABLE_LINKING_XINPUT
+bool ImGui_ImplWin32_Init(HWND ahWnd);
+void ImGui_ImplWin32_Shutdown();
+void ImGui_ImplWin32_NewFrame(SIZE aOutSize);
 
 // Win32 message handler your application need to call.
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND ahWnd, UINT auMsg, WPARAM awParam, LPARAM alParam);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND ahWnd, UINT auMsg, WPARAM awParam, LPARAM alParam);
 
 // DPI-related helpers (optional)
 // - Use to enable DPI awareness without having to create an application manifest.
@@ -32,6 +27,6 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND ahWnd, UINT au
 // - In theory we could call simple functions from Windows SDK such as SetProcessDPIAware(), SetProcessDpiAwareness(), etc.
 //   but most of the functions provided by Microsoft require Windows 8.1/10+ SDK at compile time and Windows 8/10+ at runtime,
 //   neither we want to require the user to have. So we dynamically select and load those functions to avoid dependencies.
-IMGUI_IMPL_API void  ImGui_ImplWin32_EnableDpiAwareness();
-IMGUI_IMPL_API float ImGui_ImplWin32_GetDpiScaleForHwnd(HWND ahWnd);
-IMGUI_IMPL_API float ImGui_ImplWin32_GetDpiScaleForMonitor(HMONITOR ahMonitor);
+void  ImGui_ImplWin32_EnableDpiAwareness();
+float ImGui_ImplWin32_GetDpiScaleForHwnd(HWND ahWnd);
+float ImGui_ImplWin32_GetDpiScaleForMonitor(HMONITOR ahMonitor);

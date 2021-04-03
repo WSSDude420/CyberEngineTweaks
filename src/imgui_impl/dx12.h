@@ -27,11 +27,11 @@ struct D3D12_GPU_DESCRIPTOR_HANDLE;
 // Before calling the render function, caller must prepare cmd_list by resetting it and setting the appropriate
 // render target and descriptor heap that contains font_srv_cpu_desc_handle/font_srv_gpu_desc_handle.
 // font_srv_cpu_desc_handle and font_srv_gpu_desc_handle are handles to a single SRV descriptor to use for the internal font texture.
-IMGUI_IMPL_API bool ImGui_ImplDX12_Init(ID3D12Device* apDevice, int aNumFramesInFlight, DXGI_FORMAT aRTVFormat, ID3D12DescriptorHeap* apSRVHeapDesc, D3D12_CPU_DESCRIPTOR_HANDLE aFontSRVDescCPU, D3D12_GPU_DESCRIPTOR_HANDLE aFontSRVDescGPU);
-IMGUI_IMPL_API void ImGui_ImplDX12_Shutdown();
-IMGUI_IMPL_API void ImGui_ImplDX12_NewFrame(ID3D12CommandQueue* apCommandQueue);
-IMGUI_IMPL_API void ImGui_ImplDX12_RenderDrawData(ImDrawData* apDrawData, ID3D12GraphicsCommandList* apCommandLists);
+bool ImGui_ImplDX12_Init(ID3D12Device* apDevice, int aNumFramesInFlight, DXGI_FORMAT aRTVFormat, ID3D12DescriptorHeap* apSRVHeapDesc, D3D12_CPU_DESCRIPTOR_HANDLE aFontSRVDescCPU, D3D12_GPU_DESCRIPTOR_HANDLE aFontSRVDescGPU);
+void ImGui_ImplDX12_Shutdown();
+void ImGui_ImplDX12_NewFrame(ID3D12CommandQueue* apCommandQueue);
+void ImGui_ImplDX12_RenderDrawData(ImDrawData* apDrawData, ID3D12GraphicsCommandList* apCommandLists);
 
 // Use if you want to reset your rendering device without losing Dear ImGui state.
-IMGUI_IMPL_API void ImGui_ImplDX12_InvalidateDeviceObjects();
-IMGUI_IMPL_API bool ImGui_ImplDX12_CreateDeviceObjects(ID3D12CommandQueue* apCommandQueue);
+void ImGui_ImplDX12_InvalidateDeviceObjects();
+bool ImGui_ImplDX12_CreateDeviceObjects(ID3D12CommandQueue* apCommandQueue);

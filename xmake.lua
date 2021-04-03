@@ -6,7 +6,7 @@ set_arch("x64")
 add_requires("spdlog", "nlohmann_json", "hopscotch-map", "minhook", "mem", "imgui 1.82", "sol2", "tiltedcore 0.2.2", "sqlite3", "luajit")
 add_requireconfs("sol2", { configs = { includes_lua = false } })
 
-local imguiUserConfig = path.absolute("src/imgui_impl/imgui_user_config.h")
+local imguiUserConfig = path.absolute("src/imgui_impl/user_config.h")
 add_requireconfs("imgui", { configs = { user_config = imguiUserConfig } })
 
 add_rules("mode.debug","mode.releasedbg", "mode.release")

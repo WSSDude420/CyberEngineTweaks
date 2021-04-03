@@ -197,7 +197,7 @@ void VKBindings::Clear()
     m_recordingBind = {};
 }
 
-inline static bool FirstKeyMatches(uint64_t aFirst, uint64_t aSecond)
+static bool FirstKeyMatches(uint64_t aFirst, uint64_t aSecond)
 {
     return ((aFirst & 0xFFFF000000000000ull) == (aSecond & 0xFFFF000000000000ull));
 }

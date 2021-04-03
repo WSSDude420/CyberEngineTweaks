@@ -15,6 +15,8 @@
 
 // CHANGELOG
 // (minor and older changes stripped away, please see git history for details)
+//  2021-02-18: DirectX12: Change blending equation to preserve alpha in output buffer.
+//  2021-01-11: DirectX12: Improve Windows 7 compatibility (for D3D12On7) by loading d3d12.dll dynamically.
 //  2020-09-16: DirectX12: Avoid rendering calls with zero-sized scissor rectangle since it generates a validation layer warning.
 //  2020-09-08: DirectX12: Clarified support for building on 32-bit systems by redefining ImTextureID.
 //  2019-10-18: DirectX12: *BREAKING CHANGE* Added extra ID3D12DescriptorHeap parameter to ImGui_ImplDX12_Init() function.
@@ -382,7 +384,7 @@ static void ImGui_ImplDX12_CreateFontsTexture(ID3D12CommandQueue* apCommandQueue
 
     // Store our identifier
     static_assert(sizeof(ImTextureID) >= sizeof(g_hFontSrvGpuDescHandle.ptr), "Can't pack descriptor handle into TexID, 32-bit not supported yet.");
-    io.Fonts->TexID = (ImTextureID)g_hFontSrvGpuDescHandle.ptr;
+    io.Fonts->SetTexID((ImTextureID)g_hFontSrvGpuDescHandle.ptr);
 }
 
 bool ImGui_ImplDX12_CreateDeviceObjects(ID3D12CommandQueue* apCommandQueue)
@@ -578,8 +580,8 @@ bool ImGui_ImplDX12_CreateDeviceObjects(ID3D12CommandQueue* apCommandQueue)
         desc.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
         desc.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
         desc.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
-        desc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_INV_SRC_ALPHA;
-        desc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+        desc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+        desc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_INV_SRC_ALPHA;
         desc.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
         desc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
     }
@@ -633,7 +635,7 @@ void ImGui_ImplDX12_InvalidateDeviceObjects()
     SafeRelease(g_pFontTextureResource);
 
     ImGuiIO& io = ImGui::GetIO();
-    io.Fonts->TexID = NULL; // We copied g_pFontTextureView to io.Fonts->TexID so let's clear that as well.
+    io.Fonts->SetTexID(NULL); // We copied g_pFontTextureView to io.Fonts->TexID so let's clear that as well.
 
     for (UINT i = 0; i < g_numFramesInFlight; i++)
     {
@@ -648,7 +650,7 @@ bool ImGui_ImplDX12_Init(ID3D12Device* apDevice, int aNumFramesInFlight, DXGI_FO
 {
     // Setup backend capabilities flags
     ImGuiIO& io = ImGui::GetIO();
-    io.BackendRendererName = "imgui_impl_dx12";
+    io.BackendRendererName = "DX12";
     io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;  // We can honor the ImDrawCmd::VtxOffset field, allowing for large meshes.
 
     g_pd3dDevice = apDevice;

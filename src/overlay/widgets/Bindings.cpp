@@ -152,7 +152,8 @@ bool Bindings::DrawBindings(bool aDrawHotkeys)
 
                 // transform to nicer format till modinfo is in
                 bool capitalize = true;
-                std::ranges::transform(std::as_const(activeModName), activeModName.begin(), [&capitalize](char c) {
+                std::ranges::transform(std::as_const(activeModName), activeModName.begin(), [&capitalize](char c)
+                {
                     if (!std::isalnum(c))
                     {
                         capitalize = true;
